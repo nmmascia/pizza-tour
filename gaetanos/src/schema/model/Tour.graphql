@@ -1,0 +1,6 @@
+type Tour {
+  id: String!
+  name: String!
+  user: User!
+  tourLocations: [TourLocation]!
+}

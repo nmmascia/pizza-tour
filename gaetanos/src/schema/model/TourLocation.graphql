@@ -1,0 +1,4 @@
+type TourLocation {
+  id: String!
+  date: String!
+}

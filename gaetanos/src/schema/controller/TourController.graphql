@@ -1,0 +1,8 @@
+type Query {
+  tour(id: Int!): Tour
+}
+
+type Mutation {
+  tourSave(id: Int, name: String!): Tour
+  tourDelete(id: Int!): Boolean
+}

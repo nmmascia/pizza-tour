@@ -1,0 +1,5 @@
+{
+  "type": "postgres",
+  "database": "pizza_tour_dev",
+  "synchronize": true
+}
