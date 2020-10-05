@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany } from 'typeorm';
+import { FoodRating } from './FoodRating';
 
 @Entity()
 export class Food {
@@ -7,4 +8,7 @@ export class Food {
 
   @Column()
   name: string;
+
+  @OneToMany((type) => FoodRating, (foodRating) => foodRating.user)
+  foodRatings: FoodRating[];
 }

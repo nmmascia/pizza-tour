@@ -1,19 +1,20 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { TourLocation } from './TourLocation';
 import { User } from './User';
+import { Food } from './Food';
 
 @Entity()
 export class FoodRating {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   score?: number;
 
-  @Column()
+  @Column({ nullable: true })
   overview?: string;
 
-  @Column()
+  @Column({ nullable: true })
   notes?: string;
 
   @ManyToOne((type) => TourLocation, (tourLocation) => tourLocation.foodRatings)
@@ -21,4 +22,7 @@ export class FoodRating {
 
   @ManyToOne((type) => User, (user) => user.foodRatings)
   user: User;
+
+  @ManyToOne((type) => Food, (food) => food.foodRatings)
+  food: Food;
 }
