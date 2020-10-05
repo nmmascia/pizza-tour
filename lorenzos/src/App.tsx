@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { createClient, Provider } from 'urql'
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+
+const client = createClient({
+  url: 'http://localhost:3000',
+});
+
+const App = () => (
+  <Provider value={client}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/user">
+          <Route path=":userId" element={<div>UserPage</div>} />
+        </Route>
+        <Route path="*" element={<div>Not Found</div>} />
+      </Routes>
+    </BrowserRouter>
+  </Provider>
+);
 
 export default App;
