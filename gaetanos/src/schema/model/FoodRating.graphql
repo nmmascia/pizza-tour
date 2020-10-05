@@ -1,0 +1,7 @@
+type FoodRating {
+  id: Int!
+  score: Float
+  overview: String
+  notes: String
+  user: User!
+}

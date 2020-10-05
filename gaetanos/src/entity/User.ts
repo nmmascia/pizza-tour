@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { Tour } from './Tour';
+import { FoodRating } from './FoodRating';
 
 @Entity()
 export class User {
@@ -15,4 +16,7 @@ export class User {
   @ManyToMany((type) => Tour, (tour) => tour.users)
   @JoinTable()
   tours: Tour[];
+
+  @OneToMany((type) => FoodRating, (foodRating) => foodRating.user)
+  foodRatings: FoodRating[];
 }

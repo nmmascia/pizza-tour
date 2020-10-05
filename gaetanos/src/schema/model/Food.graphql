@@ -1,0 +1,5 @@
+type Food {
+  id: Int!
+  name: String!
+  type: String!
+}
