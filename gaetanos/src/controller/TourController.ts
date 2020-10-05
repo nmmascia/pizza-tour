@@ -13,8 +13,19 @@ export class TourController {
   }
 
   @Mutation()
-  tourSave(args: any) {
-    return this.entityManager.save(Tour, this.entityManager.create(Tour, args));
+  async tourSave(args: { id?: number; name: string }) {
+    if (!this.currentUser) throw new Error('no user set');
+
+    let inputTour = this.entityManager.create(Tour, args);
+
+    if (args.id) {
+      const tour = await this.entityManager.findOneOrFail(Tour, args.id);
+      inputTour = this.entityManager.merge(Tour, tour, inputTour);
+    } else {
+      inputTour.users = [this.currentUser];
+    }
+
+    return this.entityManager.save(Tour, inputTour);
   }
 
   @Mutation()

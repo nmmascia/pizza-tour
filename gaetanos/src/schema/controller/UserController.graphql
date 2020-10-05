@@ -3,6 +3,6 @@ type Query {
 }
 
 type Mutation {
-  userSave(id: Int, username: String!, email: String!): User
+  userSave(id: Int, username: String, email: String): User
   userDelete(id: Int!): Boolean
 }

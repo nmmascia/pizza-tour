@@ -14,7 +14,7 @@ bootstrap({
   schemas: [__dirname + '/schema/**/*.graphql'],
   setupContainer: async (container) => {
     const entityManager = getManager();
-    const currentUser = await entityManager.findOneOrFail(User, { id: 1 });
+    const currentUser = await entityManager.findOne(User, { id: 1 });
     container.set(User, currentUser);
   },
 })

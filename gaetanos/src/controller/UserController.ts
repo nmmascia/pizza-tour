@@ -12,8 +12,15 @@ export class UserController {
   }
 
   @Mutation()
-  userSave(args: any) {
-    return this.entityManager.save(User, this.entityManager.create(User, args));
+  async userSave(args: { id: number }) {
+    let inputUser = this.entityManager.create(User, args);
+
+    if (args.id) {
+      const user = await this.entityManager.findOneOrFail(User, args.id);
+      inputUser = this.entityManager.merge(User, user, inputUser);
+    }
+
+    return this.entityManager.save(User, inputUser);
   }
 
   @Mutation()
