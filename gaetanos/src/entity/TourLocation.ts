@@ -7,7 +7,7 @@ export class TourLocation {
   id: number;
 
   @Column()
-  name: string;
+  date: string;
 
   @ManyToOne((type) => Tour, (tour) => tour.tourLocations)
   tour: Tour;

@@ -3,6 +3,11 @@ import { EntityManager } from 'typeorm';
 import { Tour } from '../entity/Tour';
 import { User } from '../entity/User';
 
+interface TourSaveArgs {
+  id?: number;
+  name: string;
+}
+
 @Controller()
 export class TourController {
   constructor(private entityManager: EntityManager, private currentUser?: User) {}
@@ -13,7 +18,7 @@ export class TourController {
   }
 
   @Mutation()
-  async tourSave(args: { id?: number; name: string }) {
+  async tourSave(args: TourSaveArgs) {
     if (!this.currentUser) throw new Error('no user set');
 
     let inputTour = this.entityManager.create(Tour, args);

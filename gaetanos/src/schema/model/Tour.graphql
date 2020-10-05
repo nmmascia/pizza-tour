@@ -1,5 +1,5 @@
 type Tour {
-  id: String!
+  id: Int!
   name: String!
   user: User!
   tourLocations: [TourLocation]!
