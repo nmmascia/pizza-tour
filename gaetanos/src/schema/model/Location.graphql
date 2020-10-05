@@ -1,0 +1,5 @@
+type Location {
+  id: Int!
+  name: String!
+  address: String!
+}

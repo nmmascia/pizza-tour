@@ -1,4 +1,5 @@
 type TourLocation {
   id: Int!
   date: String!
+  location: Location!
 }

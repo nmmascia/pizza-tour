@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { Tour } from './Tour';
+import { Location } from './Location';
 
 @Entity()
 export class TourLocation {
@@ -11,4 +12,7 @@ export class TourLocation {
 
   @ManyToOne((type) => Tour, (tour) => tour.tourLocations)
   tour: Tour;
+
+  @ManyToOne((type) => Location, (location) => location.tourLocations)
+  location: Location;
 }

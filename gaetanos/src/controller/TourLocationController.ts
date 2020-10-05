@@ -2,11 +2,16 @@ import { Controller, Query, Mutation } from 'vesper';
 import { EntityManager } from 'typeorm';
 import { TourLocation } from '../entity/TourLocation';
 import { Tour } from '../entity/Tour';
+import { Location } from '../entity/Location';
 
 interface TourLocationSaveArgs {
   id?: number;
   date: string;
   tourId: number;
+  location: {
+    id?: number;
+    name?: string;
+  };
 }
 
 interface TourLocationDeleteArgs {
@@ -30,13 +35,25 @@ export class TourLocationController {
     let inputTourLocation = this.entityManager.create(TourLocation, args);
 
     if (args.id) {
-      const tourLocation = await this.entityManager.findOneOrFail(TourLocation, args.id);
+      const tourLocation = await this.entityManager.findOneOrFail(TourLocation, args.id, {
+        relations: ['location'],
+      });
       inputTourLocation = this.entityManager.merge(TourLocation, tourLocation, inputTourLocation);
     }
 
+    let inputLocation = this.entityManager.create(Location, args.location);
+    if (args.location.id) {
+      const location = await this.entityManager.findOneOrFail(Location);
+      inputLocation = this.entityManager.merge(Location, location, inputLocation);
+    }
+    const savedLocation = await this.entityManager.save(Location, inputLocation);
+
+    inputTourLocation.location = savedLocation;
     const savedTourLocation = await this.entityManager.save(TourLocation, inputTourLocation);
+
     tour.tourLocations = tour.tourLocations.concat(savedTourLocation);
     await this.entityManager.save(Tour, tour);
+
     return savedTourLocation;
   }
 

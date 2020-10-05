@@ -6,11 +6,12 @@ import { User } from './entity/User';
 import { Tour } from './entity/Tour';
 import { TourLocation } from './entity/TourLocation';
 import { getManager } from 'typeorm';
+import { Location } from './entity/Location';
 
 bootstrap({
   port: 3000,
   controllers: [UserController, TourController, TourLocationController],
-  entities: [User, Tour, TourLocation],
+  entities: [User, Tour, TourLocation, Location],
   schemas: [__dirname + '/schema/**/*.graphql'],
   setupContainer: async (container) => {
     const entityManager = getManager();

@@ -2,7 +2,12 @@ type Query {
   tourLocation(id: Int!): TourLocation
 }
 
+input LocationInputType {
+  id: Int
+  name: String
+}
+
 type Mutation {
-  tourLocationSave(id: Int, tourId: Int!, date: String!): TourLocation
+  tourLocationSave(id: Int, tourId: Int!, date: String!, location: LocationInputType!): TourLocation
   tourLocationDelete(id: Int!): Boolean
 }
