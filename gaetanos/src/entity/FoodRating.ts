@@ -8,7 +8,7 @@ export class FoodRating {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
+  @Column({ type: 'float', nullable: true })
   score?: number;
 
   @Column({ nullable: true })

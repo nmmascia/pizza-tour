@@ -9,10 +9,11 @@ import { getManager } from 'typeorm';
 import { Location } from './entity/Location';
 import { FoodRating } from './entity/FoodRating';
 import { Food } from './entity/Food';
+import { FoodRatingController } from './controller/FoodRatingController';
 
 bootstrap({
   port: 3000,
-  controllers: [UserController, TourController, TourLocationController],
+  controllers: [UserController, TourController, TourLocationController, FoodRatingController],
   entities: [User, Tour, TourLocation, Location, FoodRating, Food],
   schemas: [__dirname + '/schema/**/*.graphql'],
   setupContainer: async (container) => {
@@ -20,6 +21,7 @@ bootstrap({
     const currentUser = await entityManager.findOne(User, { id: 1 });
     container.set(User, currentUser);
   },
+  cors: true,
 })
   .then(() => {
     console.log(
