@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import PizzaIcon from '@material-ui/icons/LocalPizza';
 import Skeleton from '@material-ui/lab/Skeleton';
+import IconButton from '@material-ui/core/IconButton';
 
 interface FoodCardProps {
   name: string;
@@ -15,9 +16,10 @@ interface FoodCardProps {
   image?: string;
   overview?: string;
   fetching?: boolean;
+  onRatingClick: () => void;
 }
 
-const FoodCard = ({ name, score, image, overview, fetching }: FoodCardProps) => {
+const FoodCard = ({ name, score, image, overview, fetching, onRatingClick }: FoodCardProps) => {
   return (
     <Card>
       <CardHeader
@@ -30,15 +32,17 @@ const FoodCard = ({ name, score, image, overview, fetching }: FoodCardProps) => 
                 <Typography style={{ fontWeight: 'bold' }} variant="body1">
                   {name}
                 </Typography>
-                <Avatar>
-                  {score && !fetching ? (
-                    <Typography variant="h6" component="p">
-                      {score}
-                    </Typography>
-                  ) : (
-                    <PizzaIcon />
-                  )}
-                </Avatar>
+                <IconButton size="small" onClick={onRatingClick}>
+                  <Avatar>
+                    {score && !fetching ? (
+                      <Typography variant="h6" component="p">
+                        {score}
+                      </Typography>
+                    ) : (
+                      <PizzaIcon />
+                    )}
+                  </Avatar>
+                </IconButton>
               </Box>
             )}
           </>
@@ -54,7 +58,9 @@ const FoodCard = ({ name, score, image, overview, fetching }: FoodCardProps) => 
             </>
           ) : (
             <>
-              <Typography variant="overline">Overview</Typography>
+              <Typography variant="overline" color="primary" style={{ fontWeight: 'bold' }}>
+                Overview
+              </Typography>
               <Typography variant="body2" color="textSecondary">
                 {overview}
               </Typography>
