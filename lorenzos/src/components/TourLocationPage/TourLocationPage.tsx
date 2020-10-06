@@ -8,6 +8,7 @@ import { useQuery } from 'urql';
 import { useParams } from 'react-router-dom';
 import parseISO from 'date-fns/parseISO';
 import FormattedDate from '../FormattedDate';
+import Avatar from '@material-ui/core/Avatar';
 
 interface TourLocationPageProps {
   fetching: boolean;
@@ -72,20 +73,22 @@ const TourLocationPage = ({ fetching: fetchingTour }: TourLocationPageProps) => 
   const fetching = fetchingTour || fetchingTourLocation;
 
   const tourLocation: TourLocation | void = data?.tourLocation;
+
   const foodRatingComponents = ((tourLocation && tourLocation.foodRatings) || [])
     .filter((foodRating) => {
       return foodRating.user.id === 1;
     })
     .map((foodRating) => {
       return (
-        <FoodCard
-          key={foodRating.id}
-          name={foodRating.food.name}
-          score={foodRating.score}
-          image="https://4.bp.blogspot.com/-n-jZjyEzncE/Uq8IxN6-giI/AAAAAAAADWk/OL-YhSPEG_4/s1600/Pizza+Food+Hd+Wallpaper.jpg"
-          overview="It was ok one of the pie's did not hold up to the fold and the white pziza did not hold up to the fold"
-          fetching={fetching}
-        />
+        <Box key={foodRating.id} mb={1}>
+          <FoodCard
+            name={foodRating.food.name}
+            score={foodRating.score}
+            image="https://4.bp.blogspot.com/-n-jZjyEzncE/Uq8IxN6-giI/AAAAAAAADWk/OL-YhSPEG_4/s1600/Pizza+Food+Hd+Wallpaper.jpg"
+            overview="It was ok one of the pie's did not hold up to the fold and the white pziza did not hold up to the fold"
+            fetching={fetching}
+          />
+        </Box>
       );
     });
 
@@ -115,6 +118,16 @@ const TourLocationPage = ({ fetching: fetchingTour }: TourLocationPageProps) => 
             <FormattedDate date={parseISO('2020-10-04')} />
           </Typography>
         )}
+      </Box>
+      <Divider />
+      <Box display="flex" justifyContent="center" alignItems="center" py={1}>
+        <Avatar
+          style={{
+            height: 35,
+            width: 35,
+          }}
+          src="http://headsup.boyslife.org/files/2014/03/Teenage-Mutant-Ninja-Turtles-2014-Michelangelo.jpg"
+        />
       </Box>
       <Divider />
       <Box p={1}>{foodRatingComponents}</Box>

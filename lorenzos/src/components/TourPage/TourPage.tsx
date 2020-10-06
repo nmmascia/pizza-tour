@@ -31,7 +31,7 @@ const TourPage = () => {
   });
 
   return (
-    <Box height="100%" width="100%">
+    <Box pt={1} height="100%" width="100%">
       <Box py={1}>
         {fetching ? (
           <Skeleton variant="text" height={35} width={150} />
