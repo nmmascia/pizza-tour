@@ -1,12 +1,13 @@
 import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { Routes, Route, useParams } from 'react-router-dom';
+import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import TourLocationPage from '../TourLocationPage';
 import { useQuery } from 'urql';
 import Skeleton from '@material-ui/lab/Skeleton';
 
 const TourPage = () => {
+  const navigate = useNavigate();
   const { tourId } = useParams();
   const [{ data, fetching }] = useQuery({
     query: `
@@ -29,6 +30,10 @@ const TourPage = () => {
       tourId: parseInt(tourId, 10),
     },
   });
+
+  if (data?.tour === null) {
+    navigate('/not-found', { replace: true });
+  }
 
   return (
     <Box pt={1} height="100%" width="100%">

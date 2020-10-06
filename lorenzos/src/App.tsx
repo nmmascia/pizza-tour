@@ -20,6 +20,18 @@ let theme = createMuiTheme({
       main: '#FEA430',
     },
   },
+  overrides: {
+    MuiCardHeader: {
+      root: {
+        padding: '8px 16px',
+      },
+    },
+    MuiCardContent: {
+      root: {
+        padding: '8px 16px',
+      },
+    },
+  },
 });
 
 theme = responsiveFontSizes(theme);
