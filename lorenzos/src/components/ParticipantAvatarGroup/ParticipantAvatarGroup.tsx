@@ -14,8 +14,8 @@ interface ParticipantAvatarGroupProps {
 }
 
 const ACTIVE_STYLES = {
-  height: 35,
-  width: 35,
+  height: 40,
+  width: 40,
   border: '2px solid #FEA430',
 };
 
@@ -23,7 +23,7 @@ const INACTIVE_STYLES = {
   height: 30,
   width: 30,
   margin: '0 4px',
-  filter: 'grayscale(80%)',
+  filter: 'grayscale(40%)',
 };
 
 const ParticipantAvatarGroup = ({ participants, activeIds, onClick }: ParticipantAvatarGroupProps) => {
