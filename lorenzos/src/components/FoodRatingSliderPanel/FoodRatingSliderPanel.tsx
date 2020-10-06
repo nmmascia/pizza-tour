@@ -8,9 +8,10 @@ import PizzaIcon from '@material-ui/icons/LocalPizzaRounded';
 interface FoodRatingSliderPanelProps {
   name?: string;
   score: number;
+  onChangeCommitted: (value: number) => void;
 }
 
-const FoodRatingSliderPanel = ({ name, score: inputScore }: FoodRatingSliderPanelProps) => {
+const FoodRatingSliderPanel = ({ name, score: inputScore, onChangeCommitted }: FoodRatingSliderPanelProps) => {
   const [value, setValue] = useState(inputScore * 10);
   const score = value / 10;
 
@@ -39,6 +40,9 @@ const FoodRatingSliderPanel = ({ name, score: inputScore }: FoodRatingSliderPane
             if (!Array.isArray(value)) {
               setValue(value);
             }
+          }}
+          onChangeCommitted={() => {
+            onChangeCommitted(score);
           }}
         />
       </Box>
