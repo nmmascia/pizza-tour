@@ -8,6 +8,11 @@ interface TourSaveArgs {
   name: string;
 }
 
+interface TourAddUserArgs {
+  id: number;
+  userIds: [number];
+}
+
 @Controller()
 export class TourController {
   constructor(private entityManager: EntityManager, private currentUser?: User) {}
@@ -31,6 +36,19 @@ export class TourController {
     }
 
     return this.entityManager.save(Tour, inputTour);
+  }
+
+  @Mutation()
+  async tourAddUser(args: TourAddUserArgs) {
+    if (!this.currentUser) throw new Error('no user set');
+
+    const tour = await this.entityManager.findOneOrFail(Tour, args.id, {
+      relations: ['users'],
+    });
+    const users = await this.entityManager.findByIds(User, args.userIds);
+    tour.users = [...tour.users, ...users];
+
+    return this.entityManager.save(Tour, tour);
   }
 
   @Mutation()

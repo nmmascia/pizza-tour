@@ -5,4 +5,5 @@ type Query {
 type Mutation {
   tourSave(id: Int, name: String!): Tour
   tourDelete(id: Int!): Boolean
+  tourAddUser(id: Int, userIds: [Int]!): Tour
 }
