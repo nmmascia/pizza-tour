@@ -6,10 +6,11 @@ import Slider from '@material-ui/core/Slider';
 import PizzaIcon from '@material-ui/icons/LocalPizzaRounded';
 
 interface FoodRatingSliderPanelProps {
+  name?: string;
   score: number;
 }
 
-const FoodRatingSliderPanel = ({ score: inputScore }: FoodRatingSliderPanelProps) => {
+const FoodRatingSliderPanel = ({ name, score: inputScore }: FoodRatingSliderPanelProps) => {
   const [value, setValue] = useState(inputScore * 10);
   const score = value / 10;
 
@@ -20,17 +21,17 @@ const FoodRatingSliderPanel = ({ score: inputScore }: FoodRatingSliderPanelProps
           Rating
         </Typography>
         <Typography variant="h6" align="center">
-          Traditional
+          {name}
         </Typography>
       </Box>
-      <Box py={2} display="flex" justifyContent="center" alignItems="center" width="100%">
+      <Box pt={2} pb={1} display="flex" justifyContent="center" alignItems="center" width="100%">
         <PizzaIcon color="secondary" />
         <Box px={1}>
           <Avatar style={{ height: 60, width: 60 }}>{score}</Avatar>
         </Box>
         <PizzaIcon color="secondary" />
       </Box>
-      <Box pb={2} width="100%">
+      <Box pb={1} width="100%">
         <Slider
           color="primary"
           value={value}

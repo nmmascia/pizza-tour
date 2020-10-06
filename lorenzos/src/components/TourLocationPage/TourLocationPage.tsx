@@ -39,7 +39,7 @@ interface TourLocation {
 }
 
 const TourLocationPage = ({ fetching: fetchingTour }: TourLocationPageProps) => {
-  const [ratingDrawerOpen, setRatingDrawerOpen] = useState(false);
+  const [ratingDrawerOpen, setRatingDrawerOpen] = useState<number | undefined>();
 
   const { tourLocationId } = useParams();
   const [{ data, fetching: fetchingTourLocation }] = useQuery({
@@ -92,12 +92,16 @@ const TourLocationPage = ({ fetching: fetchingTour }: TourLocationPageProps) => 
             overview="It was ok one of the pie's did not hold up to the fold and the white pziza did not hold up to the fold"
             fetching={fetching}
             onRatingClick={() => {
-              setRatingDrawerOpen(true);
+              setRatingDrawerOpen(foodRating.id);
             }}
           />
         </Box>
       );
     });
+
+  const openedFoodRating = ((tourLocation && tourLocation.foodRatings) || []).find((foodRating) => {
+    return foodRating.id === ratingDrawerOpen;
+  });
 
   return (
     <>
@@ -141,13 +145,16 @@ const TourLocationPage = ({ fetching: fetchingTour }: TourLocationPageProps) => 
         <Box p={1}>{foodRatingComponents}</Box>
       </Box>
       <Drawer
-        open={ratingDrawerOpen}
+        open={Boolean(ratingDrawerOpen)}
         anchor="bottom"
         onClose={() => {
-          setRatingDrawerOpen(false);
+          setRatingDrawerOpen(undefined);
         }}
       >
-        <FoodRatingSliderPanel score={7.1} />
+        <FoodRatingSliderPanel
+          name={openedFoodRating && openedFoodRating.food.name}
+          score={(openedFoodRating && openedFoodRating.score) || 0}
+        />
       </Drawer>
     </>
   );
