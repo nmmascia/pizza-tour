@@ -5,6 +5,10 @@ import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import TourLocationPage from '../TourLocationPage';
 import { useQuery } from 'urql';
 import Skeleton from '@material-ui/lab/Skeleton';
+import TourIndexPage from '../TourIndexPage';
+import partition from 'lodash/partition';
+import parseISO from 'date-fns/parseISO';
+import isFuture from 'date-fns/isFuture';
 
 const TourPage = () => {
   const navigate = useNavigate();
@@ -15,12 +19,30 @@ const TourPage = () => {
         tour(id: $tourId) {
           id
           name
+          users {
+            id
+            name
+            username
+          }
           tourLocations {
             id
             date
             location {
               id
               name
+            }
+            foodRatings {
+              id
+              user {
+                id
+                username
+              }
+              score
+              overview
+              food {
+                id
+                name
+              }
             }
           }
         }
@@ -35,6 +57,12 @@ const TourPage = () => {
     navigate('/not-found', { replace: true });
   }
 
+  const [upcomingDates, pastDates] = partition(data?.tour?.tourLocations, ({ date }) => {
+    return isFuture(parseISO(date));
+  });
+
+  console.log(upcomingDates, pastDates);
+
   return (
     <Box pt={1} height="100%" width="100%">
       <Box py={1}>
@@ -48,7 +76,7 @@ const TourPage = () => {
       </Box>
       <Routes>
         <Route path="tour-location/:tourLocationId" element={<TourLocationPage fetching={fetching} />} />
-        <Route element={<div> UPCOMING EVENTS</div>} />
+        <Route element={<TourIndexPage upcomingDates={upcomingDates} pastDates={pastDates} />} />
       </Routes>
     </Box>
   );

@@ -10,9 +10,9 @@ export class Tour {
   @Column()
   name: string;
 
-  @OneToMany((type) => TourLocation, (tourLocation) => tourLocation.tour)
+  @OneToMany(() => TourLocation, (tourLocation) => tourLocation.tour)
   tourLocations: TourLocation[];
 
-  @ManyToMany((type) => User, (user) => user.tours)
+  @ManyToMany(() => User, (user) => user.tours)
   users: User[];
 }

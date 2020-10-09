@@ -19,7 +19,9 @@ export class TourController {
 
   @Query()
   tour({ id }: { id: number }) {
-    return this.entityManager.findOne(Tour, id);
+    return this.entityManager.findOne(Tour, id, {
+      relations: ['users'] /* Need to include relation here but not on owner side */,
+    });
   }
 
   @Mutation()

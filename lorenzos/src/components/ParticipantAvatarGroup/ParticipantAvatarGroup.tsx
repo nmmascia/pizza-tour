@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/Icon';
 
 interface ParticipantAvatarGroupProps {
   participants: Array<{

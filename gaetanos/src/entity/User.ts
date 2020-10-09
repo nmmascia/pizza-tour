@@ -8,15 +8,21 @@ export class User {
   id: number;
 
   @Column()
+  name: string;
+
+  @Column()
   username: string;
 
   @Column()
   email: string;
 
-  @ManyToMany((type) => Tour, (tour) => tour.users)
+  @Column({ nullable: true })
+  url: string;
+
+  @ManyToMany(() => Tour, (tour) => tour.users)
   @JoinTable()
   tours: Tour[];
 
-  @OneToMany((type) => FoodRating, (foodRating) => foodRating.user)
+  @OneToMany(() => FoodRating, (foodRating) => foodRating.user)
   foodRatings: FoodRating[];
 }
