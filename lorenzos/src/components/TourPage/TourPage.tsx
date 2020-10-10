@@ -61,8 +61,6 @@ const TourPage = () => {
     return isFuture(parseISO(date));
   });
 
-  console.log(upcomingDates, pastDates);
-
   return (
     <Box pt={1} height="100%" width="100%">
       <Box py={1}>

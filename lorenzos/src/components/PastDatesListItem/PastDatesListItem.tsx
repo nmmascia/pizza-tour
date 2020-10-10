@@ -68,7 +68,7 @@ const PastDatesListItem = ({ date, location: { name }, foodRatings }: PastDatesL
                   <ListItemText>
                     <Box display="flex" justifyContent="space-between">
                       <Typography>{fr.food.name}</Typography>
-                      <Typography>{fr.score}</Typography>
+                      <Typography>{fr.score || '--'}</Typography>
                     </Box>
                   </ListItemText>
                 </ListItem>
