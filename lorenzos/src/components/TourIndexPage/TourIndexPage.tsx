@@ -19,6 +19,19 @@ interface TourIndexPageProps {
       id: string;
       name: string;
     };
+    foodRatings: Array<{
+      id: number;
+      user: {
+        id: number;
+        username: string;
+      };
+      score?: number;
+      overview?: string;
+      food: {
+        id: number;
+        name: string;
+      };
+    }>;
   }>;
 }
 
