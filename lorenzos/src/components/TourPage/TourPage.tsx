@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { Routes, Route, useParams, useNavigate } from 'react-router-dom';
+import { Routes, Route, useParams, Navigate } from 'react-router-dom';
 import TourLocationPage from '../TourLocationPage';
 import { useQuery } from 'urql';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -11,7 +11,6 @@ import parseISO from 'date-fns/parseISO';
 import isFuture from 'date-fns/isFuture';
 
 const TourPage = () => {
-  const navigate = useNavigate();
   const { tourId } = useParams();
   const [{ data, fetching }] = useQuery({
     query: `
@@ -54,7 +53,7 @@ const TourPage = () => {
   });
 
   if (data?.tour === null) {
-    navigate('/not-found', { replace: true });
+    return <Navigate to="/not-found" replace={true} />;
   }
 
   const [upcomingDates, pastDates] = partition(data?.tour?.tourLocations, ({ date }) => {
