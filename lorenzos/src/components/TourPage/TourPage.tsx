@@ -4,7 +4,6 @@ import Typography from '@material-ui/core/Typography';
 import { Routes, Route, useParams, Navigate } from 'react-router-dom';
 import TourLocationPage from '../TourLocationPage';
 import { useQuery } from 'urql';
-import Skeleton from '@material-ui/lab/Skeleton';
 import TourIndexPage from '../TourIndexPage';
 import partition from 'lodash/partition';
 import parseISO from 'date-fns/parseISO';
@@ -63,13 +62,9 @@ const TourPage = () => {
   return (
     <Box pt={1} height="100%" width="100%">
       <Box py={1}>
-        {fetching ? (
-          <Skeleton variant="text" height={35} width={150} />
-        ) : (
-          <Typography variant="h5" component="h1">
-            {data?.tour?.name}
-          </Typography>
-        )}
+        <Typography variant="h5" component="h1">
+          {data?.tour?.name}
+        </Typography>
       </Box>
       <Routes>
         <Route path="tour-location/:tourLocationId" element={<TourLocationPage fetching={fetching} />} />
