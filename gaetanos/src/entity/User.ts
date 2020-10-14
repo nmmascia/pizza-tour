@@ -7,17 +7,20 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   username: string;
 
-  @Column()
+  @Column({ unique: true, nullable: true })
   email: string;
 
   @Column({ nullable: true })
   url: string;
+
+  @Column()
+  password: string;
 
   @ManyToMany(() => Tour, (tour) => tour.users)
   @JoinTable()

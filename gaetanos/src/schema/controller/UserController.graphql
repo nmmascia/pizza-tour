@@ -2,7 +2,14 @@ type Query {
   user(id: Int!): User
 }
 
+type TokenCreationPayload {
+  token: String!
+  user: User!
+}
+
 type Mutation {
+  userLogin(username: String!, password: String!): TokenCreationPayload
+  userRegister(username: String!, password: String!, passwordConfirmation: String!): TokenCreationPayload
   userSave(id: Int, name: String, username: String, email: String): User
   userDelete(id: Int!): Boolean
 }

@@ -10,16 +10,30 @@ import { Location } from './entity/Location';
 import { FoodRating } from './entity/FoodRating';
 import { Food } from './entity/Food';
 import { FoodRatingController } from './controller/FoodRatingController';
+import jwt from 'jsonwebtoken';
+
+interface TokenPayload {
+  user: {
+    id: number;
+  };
+}
 
 bootstrap({
   port: 3000,
   controllers: [UserController, TourController, TourLocationController, FoodRatingController],
   entities: [User, Tour, TourLocation, Location, FoodRating, Food],
   schemas: [__dirname + '/schema/**/*.graphql'],
-  setupContainer: async (container) => {
-    const entityManager = getManager();
-    const currentUser = await entityManager.findOne(User, { id: 1 });
-    container.set(User, currentUser);
+  setupContainer: async (container, action) => {
+    const authHeader = action.request?.header('Authorization');
+    const token = authHeader?.replace('Bearer ', '');
+
+    if (token) {
+      const payload = <TokenPayload>await jwt.verify(token, 'so_secret');
+      console.log(payload);
+      const entityManager = getManager();
+      const currentUser = await entityManager.findOne(User, { id: payload.user.id });
+      container.set(User, currentUser);
+    }
   },
   cors: true,
 })
