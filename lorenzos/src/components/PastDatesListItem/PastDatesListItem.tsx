@@ -50,9 +50,6 @@ const PastDatesListItem = ({ id, date, location: { name }, foodRatings }: PastDa
                   textDecoration: 'none',
                 }}
                 to={`tour-location/${id}`}
-                onClick={(event) => {
-                  event.stopPropagation();
-                }}
               >
                 <Typography color="primary" variant="h6" component="p">
                   {name}
