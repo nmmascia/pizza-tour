@@ -6,17 +6,24 @@ import Button from '@material-ui/core/Button';
 import Slide from '@material-ui/core/Slide';
 import { useMutation } from 'urql';
 import PizzaIcon from '@material-ui/icons/LocalPizza';
+import useLocalStorage from 'react-use/lib/useLocalStorage';
+import { useNavigate } from 'react-router-dom';
 
 const LOGIN_MUTATION = `
   mutation($username: String!, $password: String!) {
     userLogin(username: $username, password: $password) {
       token
+      user {
+        id
+      }
     }
   }
 `;
 
 const LoginPage = () => {
   const [, loginMutation] = useMutation(LOGIN_MUTATION);
+  const lsReturn = useLocalStorage('token');
+  const navigate = useNavigate();
 
   return (
     <Box display="flex" minHeight="60vh" width="100%" alignItems="center" justifyContent="center">
@@ -64,7 +71,8 @@ const LoginPage = () => {
               }}
               onSubmit={async ({ formData }) => {
                 const response = await loginMutation(formData);
-                console.log(response);
+                lsReturn[1](response.data.userLogin.token);
+                navigate(`/user/${response.data.userLogin.user.id}`);
               }}
             >
               <Box display="flex" alignItems="center" justifyContent="center" pt={1}>
