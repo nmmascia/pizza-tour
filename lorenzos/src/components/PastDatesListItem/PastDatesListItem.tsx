@@ -8,8 +8,10 @@ import Collapse from '@material-ui/core/Collapse';
 import List from '@material-ui/core/List';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
+import { Link } from 'react-router-dom';
 
 interface PastDatesListItemProps {
+  id: string;
   date: string;
   location: {
     name: string;
@@ -29,7 +31,7 @@ interface PastDatesListItemProps {
   }>;
 }
 
-const PastDatesListItem = ({ date, location: { name }, foodRatings }: PastDatesListItemProps) => {
+const PastDatesListItem = ({ id, date, location: { name }, foodRatings }: PastDatesListItemProps) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -43,9 +45,19 @@ const PastDatesListItem = ({ date, location: { name }, foodRatings }: PastDatesL
         <ListItemText>
           <Box display="flex" flexDirection="column" width="100%">
             <Box display="flex" justifyContent="space-between" alignItems="center">
-              <Typography color="primary" variant="h6" component="p">
-                {name}
-              </Typography>
+              <Link
+                style={{
+                  textDecoration: 'none',
+                }}
+                to={`tour-location/${id}`}
+                onClick={(event) => {
+                  event.stopPropagation();
+                }}
+              >
+                <Typography color="primary" variant="h6" component="p">
+                  {name}
+                </Typography>
+              </Link>
               <Typography variant="caption">
                 <FormattedDate date={date} />
               </Typography>
