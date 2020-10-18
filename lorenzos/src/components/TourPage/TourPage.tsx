@@ -62,7 +62,7 @@ const TourPage = () => {
   return (
     <Box pt={1} height="100%" width="100%">
       <Box py={1}>
-        <Typography variant="h5" component="h1">
+        <Typography align="center" color="primary" variant="body1" component="h1" style={{ fontWeight: 'bold' }}>
           {data?.tour?.name}
         </Typography>
       </Box>
