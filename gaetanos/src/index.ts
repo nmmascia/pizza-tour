@@ -28,11 +28,14 @@ bootstrap({
     const token = authHeader?.replace('Bearer ', '');
 
     if (token) {
-      const payload = <TokenPayload>await jwt.verify(token, 'so_secret');
-      console.log(payload);
-      const entityManager = getManager();
-      const currentUser = await entityManager.findOne(User, { id: payload.user.id });
-      container.set(User, currentUser);
+      try {
+        const payload = <TokenPayload>await jwt.verify(token, 'so_secret');
+        const entityManager = getManager();
+        const currentUser = await entityManager.findOne(User, { id: payload.user.id });
+        container.set(User, currentUser);
+      } catch (error) {
+        console.warn('no token');
+      }
     }
   },
   cors: true,

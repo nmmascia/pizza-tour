@@ -28,6 +28,8 @@ export class TourController {
   async tourSave(args: TourSaveArgs) {
     if (!this.currentUser) throw new Error('no user set');
 
+    console.log(this.currentUser);
+
     let inputTour = this.entityManager.create(Tour, args);
 
     if (args.id) {

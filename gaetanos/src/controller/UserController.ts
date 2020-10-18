@@ -10,6 +10,7 @@ export class UserController {
 
   @Query()
   user({ id }: { id: number }) {
+    console.log(id);
     return this.entityManager.findOne(User, id);
   }
 

@@ -13,6 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import client from './graphql/client';
 import LoggedInRoute from './components/LoggedInRoute';
 import LoginPage from './components/LoginPage';
+import UserPage from './components/UserPage';
 
 let theme = createMuiTheme({
   palette: {
@@ -54,6 +55,7 @@ const App = () => (
           </AppBar>
           <Container fixed style={{ minHeight: 'calc(100vh - 56px)' }}>
             <Routes>
+              <LoggedInRoute path="/user/:userId/*" element={<UserPage />} />
               <LoggedInRoute path="/tour/:tourId/*" element={<TourPage />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="*" element={<div>Not Found</div>} />
