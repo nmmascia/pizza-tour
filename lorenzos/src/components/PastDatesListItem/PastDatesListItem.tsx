@@ -51,7 +51,7 @@ const PastDatesListItem = ({ id, date, location: { name }, foodRatings }: PastDa
                 }}
                 to={`tour-location/${id}`}
               >
-                <Typography color="primary" variant="h6" component="p">
+                <Typography variant="body2" color="primary" style={{ fontWeight: 500 }}>
                   {name}
                 </Typography>
               </Link>

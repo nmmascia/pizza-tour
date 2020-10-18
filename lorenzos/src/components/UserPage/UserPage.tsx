@@ -86,7 +86,9 @@ const UserPage = () => {
                 <ListItem key={tour.id}>
                   <Box py={1}>
                     <Link style={{ textDecoration: 'none' }} to={`/tour/${tour.id}`}>
-                      {tour.name}
+                      <Typography variant="body2" color="primary" style={{ fontWeight: 500 }}>
+                        {tour.name}
+                      </Typography>
                     </Link>
                   </Box>
                 </ListItem>

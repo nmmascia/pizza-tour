@@ -21,7 +21,7 @@ const UpcomingDateListItem = ({ id, date, location: { name } }: UpcomingDateList
         <Box display="flex" flexDirection="column" width="100%">
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Link style={{ textDecoration: 'none' }} to={`tour-location/${id}`}>
-              <Typography color="primary" variant="h6" component="p">
+              <Typography variant="body2" color="primary" style={{ fontWeight: 500 }}>
                 {name}
               </Typography>
             </Link>

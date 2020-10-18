@@ -32,7 +32,7 @@ const List = ({ label, creatable, children }: ListProps) => {
     <MuiList>
       <MuiListSubheader color="primary" style={{ paddingRight: 0 }}>
         <Box width="100%" display="flex" justifyContent="space-between" alignItems="center" pb={0.5}>
-          <Typography variant="h6" component="h2">
+          <Typography variant="h6" component="h2" style={{ fontWeight: 700 }}>
             {label}
           </Typography>
           {creatable && (
