@@ -6,13 +6,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ListItem from '@material-ui/core/ListItem';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import List from '../List';
 import TrophyIcon from '@material-ui/icons/EmojiEvents';
-import { FormatListBulleted } from '@material-ui/icons';
 
 interface UserData {
   id: string;
+  name?: string;
   username: string;
   tours: Array<{
     id: string;
@@ -24,10 +24,17 @@ const USER_PAGE_QUERY = `
   query($id: Int!) {
     user(id: $id) {
       id
+      name
       username
       tours {
         id
         name
+        users {
+          id
+          name
+          email
+          username
+        }
         tourLocations {
           id
           date
@@ -43,12 +50,12 @@ const USER_PAGE_QUERY = `
 
 const UserPage = () => {
   const { user } = useAutheticated();
-  console.log('id:', user);
+  const { userId } = useParams();
 
   const [{ data, fetching }] = useQuery({
     query: USER_PAGE_QUERY,
     variables: {
-      id: 2,
+      id: parseInt(userId, 10),
     },
   });
 
@@ -75,7 +82,7 @@ const UserPage = () => {
               <Typography variant="h4" component="h1" style={{ fontWeight: 700 }} color="primary">
                 {userData.username}
               </Typography>
-              <Typography variant="body2">Nicholas Mascia</Typography>
+              <Typography variant="body2">{userData.name || 'Pizza Eater'}</Typography>
             </Box>
             <Avatar
               style={{ height: 80, width: 80, border: '5px solid #FEA430' }}
