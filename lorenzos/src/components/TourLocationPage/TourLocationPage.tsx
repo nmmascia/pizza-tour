@@ -3,7 +3,6 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import FoodCard from '../FoodCard';
-import Skeleton from '@material-ui/lab/Skeleton';
 import { useQuery, useMutation } from 'urql';
 import { useParams } from 'react-router-dom';
 import parseISO from 'date-fns/parseISO';
@@ -58,10 +57,6 @@ const UPDATE_RATING_MUTATION = `
   }
 `;
 
-interface TourLocationPageProps {
-  fetching: boolean;
-}
-
 interface TourLocation {
   id: number;
   date: string;
@@ -92,22 +87,23 @@ interface TourLocation {
   };
 }
 
-const TourLocationPage = ({ fetching: fetchingTour }: TourLocationPageProps) => {
+const TourLocationPage = () => {
   const [ratingDrawerOpen, setRatingDrawerOpen] = useState<number | undefined>();
   const [activeUser, setActiveUser] = useState<number>(1);
 
   const { tourLocationId } = useParams();
-  const [{ data, fetching: fetchingTourLocation }] = useQuery({
+  const [{ data, fetching }] = useQuery({
     query: PAGE_QUERY,
     variables: {
       id: parseInt(tourLocationId, 10),
     },
-    pause: fetchingTour,
   });
 
   const [, updateRating] = useMutation(UPDATE_RATING_MUTATION);
 
-  const fetching = fetchingTour || fetchingTourLocation;
+  if (fetching) {
+    return <div>Loading...</div>;
+  }
 
   const tourLocation: TourLocation = data?.tourLocation || {};
 

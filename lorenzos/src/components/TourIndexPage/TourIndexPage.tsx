@@ -3,49 +3,71 @@ import UpcomingDatesList from '../UpcomingDatesList';
 import Box from '@material-ui/core/Box';
 import PastDatesList from '../PastDatesList';
 import Typography from '@material-ui/core/Typography';
+import partition from 'lodash/partition';
+import parseISO from 'date-fns/parseISO';
+import isFuture from 'date-fns/isFuture';
+import { useParams, Navigate } from 'react-router-dom';
+import { useQuery } from 'urql';
 
-interface TourIndexPageProps {
-  tour: {
-    id: string;
-    name: string;
-  };
-  upcomingDates: Array<{
-    id: string;
-    date: string;
-    location: {
-      id: string;
-      name: string;
-    };
-  }>;
-  pastDates: Array<{
-    id: string;
-    date: string;
-    location: {
-      id: string;
-      name: string;
-    };
-    foodRatings: Array<{
-      id: number;
-      user: {
-        id: number;
-        username: string;
-      };
-      score?: number;
-      overview?: string;
-      food: {
-        id: number;
-        name: string;
-      };
-    }>;
-  }>;
-}
+const TourIndexPage = () => {
+  const { tourId } = useParams();
+  const [{ data, fetching }] = useQuery({
+    query: `
+      query($tourId: Int!) {
+        tour(id: $tourId) {
+          id
+          name
+          users {
+            id
+            name
+            username
+          }
+          tourLocations {
+            id
+            date
+            location {
+              id
+              name
+            }
+            foodRatings {
+              id
+              user {
+                id
+                username
+              }
+              score
+              overview
+              food {
+                id
+                name
+              }
+            }
+          }
+        }
+      }
+    `,
+    variables: {
+      tourId: parseInt(tourId, 10),
+    },
+  });
 
-const TourIndexPage = ({ tour, upcomingDates, pastDates }: TourIndexPageProps) => {
+  if (fetching) {
+    return <div>Loading..</div>;
+  }
+
+  if (data?.tour === null) {
+    return <Navigate to="/not-found" replace={true} />;
+  }
+
+  const [upcomingDates, pastDates] = partition(data?.tour?.tourLocations, ({ date }) => {
+    return isFuture(parseISO(date));
+  });
+
   return (
     <>
       <Box py={1}>
         <Typography align="center" color="primary" variant="body1" component="h1" style={{ fontWeight: 'bold' }}>
-          {tour?.name}
+          {data?.tour?.name}
         </Typography>
       </Box>
       <Box>
