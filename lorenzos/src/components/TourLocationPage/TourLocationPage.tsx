@@ -24,6 +24,14 @@ query($id: Int!) {
       id
       name
     }
+    tour {
+      id
+      name
+      users {
+        id
+        username
+      }
+    }
     foodRatings {
       id
       user {
@@ -74,6 +82,14 @@ interface TourLocation {
       name: string;
     };
   }>;
+  tour: {
+    id: string;
+    name: string;
+    users: Array<{
+      id: string;
+      username: string;
+    }>;
+  };
 }
 
 const TourLocationPage = ({ fetching: fetchingTour }: TourLocationPageProps) => {
@@ -93,10 +109,10 @@ const TourLocationPage = ({ fetching: fetchingTour }: TourLocationPageProps) => 
 
   const fetching = fetchingTour || fetchingTourLocation;
 
-  const tourLocation: TourLocation | void = data?.tourLocation;
+  const tourLocation: TourLocation = data?.tourLocation || {};
 
   const foodRatingsByUserId = groupBy((tourLocation && tourLocation.foodRatings) || [], 'user.id');
-  const participants = uniqBy((tourLocation && tourLocation.foodRatings) || [], 'user.id').map((fr) => fr.user);
+  const participants = uniqBy((tourLocation && tourLocation.foodRatings) || [], 'user.id').map((fr) => fr.user); //| tourLocation.tour.users;
   const activeUserDetails = participants.find((participant) => participant.id === activeUser);
 
   const foodRatingComponents = sortBy(foodRatingsByUserId[activeUser] || [], 'id').map((foodRating) => {
@@ -122,31 +138,25 @@ const TourLocationPage = ({ fetching: fetchingTour }: TourLocationPageProps) => 
 
   return (
     <>
+      <Box py={1}>
+        <Typography align="center" color="primary" variant="body1" component="h1" style={{ fontWeight: 'bold' }}>
+          {tourLocation?.tour?.name}
+        </Typography>
+      </Box>
       <Box height="100%" width="100%">
         <Box display="flex" justifyContent="space-between" pb={1}>
           <Box display="flex" flexDirection="column">
-            {fetching ? (
-              <Skeleton variant="text" height={25} width={175} />
-            ) : (
-              <Typography variant="h6" component="h2" color="primary">
-                {data?.tourLocation?.location?.name}
-              </Typography>
-            )}
-            {fetching ? (
-              <Skeleton variant="text" height={20} width={75} />
-            ) : (
-              <Typography variant="caption" component="span">
-                Brooklyn, NY
-              </Typography>
-            )}
-          </Box>
-          {fetching ? (
-            <Skeleton variant="text" height={20} width={75} />
-          ) : (
-            <Typography variant="body2">
-              <FormattedDate date={parseISO('2020-10-04')} />
+            <Typography variant="h6" component="h2" color="primary">
+              {data?.tourLocation?.location?.name}
             </Typography>
-          )}
+            <Typography variant="caption" component="span">
+              Brooklyn, NY
+            </Typography>
+          </Box>
+
+          <Typography variant="body2">
+            <FormattedDate date={parseISO('2020-10-04')} />
+          </Typography>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="center" width="100%">
           <Divider />

@@ -2,5 +2,7 @@ type TourLocation {
   id: Int!
   date: String!
   location: Location!
-  foodRatings: [FoodRating]
+  foodRatings: [FoodRating]!
+  users: [User]!
+  tour: Tour!
 }

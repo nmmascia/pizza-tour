@@ -51,6 +51,10 @@ const TourPage = () => {
     },
   });
 
+  if (fetching) {
+    return <div>Loading..</div>;
+  }
+
   if (data?.tour === null) {
     return <Navigate to="/not-found" replace={true} />;
   }
@@ -61,14 +65,9 @@ const TourPage = () => {
 
   return (
     <Box pt={1} height="100%" width="100%">
-      <Box py={1}>
-        <Typography align="center" color="primary" variant="body1" component="h1" style={{ fontWeight: 'bold' }}>
-          {data?.tour?.name}
-        </Typography>
-      </Box>
       <Routes>
         <Route path="tour-location/:tourLocationId" element={<TourLocationPage fetching={fetching} />} />
-        <Route element={<TourIndexPage upcomingDates={upcomingDates} pastDates={pastDates} />} />
+        <Route element={<TourIndexPage tour={data.tour} upcomingDates={upcomingDates} pastDates={pastDates} />} />
       </Routes>
     </Box>
   );

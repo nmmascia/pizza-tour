@@ -11,6 +11,7 @@ import { FoodRating } from './entity/FoodRating';
 import { Food } from './entity/Food';
 import { FoodRatingController } from './controller/FoodRatingController';
 import jwt from 'jsonwebtoken';
+import { TourLocationResolver } from './resolvers/TourLocationResolver';
 
 interface TokenPayload {
   user: {
@@ -22,6 +23,7 @@ bootstrap({
   port: 3000,
   controllers: [UserController, TourController, TourLocationController, FoodRatingController],
   entities: [User, Tour, TourLocation, Location, FoodRating, Food],
+  // resolvers: [TourLocationResolver],
   schemas: [__dirname + '/schema/**/*.graphql'],
   setupContainer: async (container, action) => {
     const authHeader = action.request?.header('Authorization');

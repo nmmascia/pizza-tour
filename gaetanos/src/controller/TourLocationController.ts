@@ -34,7 +34,9 @@ export class TourLocationController {
 
   @Query()
   tourLocation({ id }: { id: number }) {
-    return this.entityManager.findOne(TourLocation, id);
+    return this.entityManager.findOne(TourLocation, id, {
+      relations: ['tour', 'tour.users'],
+    });
   }
 
   @Mutation()

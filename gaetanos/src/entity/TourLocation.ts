@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, ManyToMan
 import { Tour } from './Tour';
 import { Location } from './Location';
 import { FoodRating } from './FoodRating';
+import { User } from './User';
 
 @Entity()
 export class TourLocation {
@@ -19,4 +20,6 @@ export class TourLocation {
 
   @OneToMany((type) => FoodRating, (foodRating) => foodRating.tourLocation)
   foodRatings: FoodRating[];
+
+  users: User[];
 }
