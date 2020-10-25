@@ -13,6 +13,7 @@ import ParticipantAvatarGroup from '../ParticipantAvatarGroup';
 import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
 import uniqBy from 'lodash/uniqBy';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const PAGE_QUERY = `
 query($id: Int!) {
@@ -102,7 +103,11 @@ const TourLocationPage = () => {
   const [, updateRating] = useMutation(UPDATE_RATING_MUTATION);
 
   if (fetching) {
-    return <div>Loading...</div>;
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="300px" width="100%">
+        <CircularProgress />
+      </Box>
+    );
   }
 
   const tourLocation: TourLocation = data?.tourLocation || {};
@@ -151,7 +156,7 @@ const TourLocationPage = () => {
           </Box>
 
           <Typography variant="body2">
-            <FormattedDate date={parseISO('2020-10-04')} />
+            <FormattedDate date={parseISO(tourLocation.date)} />
           </Typography>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="center" width="100%">

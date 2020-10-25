@@ -8,6 +8,7 @@ import parseISO from 'date-fns/parseISO';
 import isFuture from 'date-fns/isFuture';
 import { useParams, Navigate } from 'react-router-dom';
 import { useQuery } from 'urql';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const TourIndexPage = () => {
   const { tourId } = useParams();
@@ -52,7 +53,11 @@ const TourIndexPage = () => {
   });
 
   if (fetching) {
-    return <div>Loading..</div>;
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="300px" width="100%">
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (data?.tour === null) {
