@@ -1,4 +1,3 @@
-import useLocalStorage from 'react-use/lib/useLocalStorage';
 import jwtDecode from 'jwt-decode';
 
 interface UseAuthenticatedPayload {
@@ -7,13 +6,14 @@ interface UseAuthenticatedPayload {
 }
 
 const useAuthenticated = (): UseAuthenticatedPayload => {
-  const lsReturn = useLocalStorage('token');
-  const token = lsReturn[0] as string;
+  const token: string | null = localStorage.getItem('token');
 
   if (token) {
-    const { sub: user } = jwtDecode(token);
+    const { user } = jwtDecode(token);
+    console.log('Active User:', user);
     return { authenticated: true, user };
   } else {
+    console.log('No Token');
     return { authenticated: false, user: null };
   }
 };

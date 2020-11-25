@@ -113,7 +113,12 @@ const TourLocationPage = () => {
   const tourLocation: TourLocation = data?.tourLocation || {};
 
   const foodRatingsByUserId = groupBy((tourLocation && tourLocation.foodRatings) || [], 'user.id');
-  const participants = uniqBy((tourLocation && tourLocation.foodRatings) || [], 'user.id').map((fr) => fr.user); //| tourLocation.tour.users;
+  const participants = sortBy(
+    uniqBy((tourLocation && tourLocation.foodRatings) || [], 'user.id').map((fr) => fr.user),
+    'username'
+  );
+
+  console.log(participants);
   const activeUserDetails = participants.find((participant) => participant.id === activeUser);
 
   const foodRatingComponents = sortBy(foodRatingsByUserId[activeUser] || [], 'id').map((foodRating) => {

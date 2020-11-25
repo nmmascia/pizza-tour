@@ -4,6 +4,15 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+console.log(`
+======================= PIZZA TOUR =======================
+
+          Wize man say, "Forgiveness is divine,
+         but never pay full price for late pizza.
+
+==========================================================
+`);
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

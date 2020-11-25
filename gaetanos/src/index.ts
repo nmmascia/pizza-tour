@@ -35,8 +35,9 @@ bootstrap({
         const entityManager = getManager();
         const currentUser = await entityManager.findOne(User, { id: payload.user.id });
         container.set(User, currentUser);
+        console.log('Parsed current user:', currentUser);
       } catch (error) {
-        console.warn('no token');
+        console.warn('Parsed token failure:', error.message);
       }
     }
   },

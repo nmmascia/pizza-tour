@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Form from '@rjsf/material-ui';
 import Paper from '@material-ui/core/Paper';
@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 import Slide from '@material-ui/core/Slide';
 import { useMutation } from 'urql';
 import PizzaIcon from '@material-ui/icons/LocalPizza';
-import useLocalStorage from 'react-use/lib/useLocalStorage';
 import { useNavigate } from 'react-router-dom';
 
 const LOGIN_MUTATION = `
@@ -22,8 +21,8 @@ const LOGIN_MUTATION = `
 
 const LoginPage = () => {
   const [, loginMutation] = useMutation(LOGIN_MUTATION);
-  const lsReturn = useLocalStorage('token');
   const navigate = useNavigate();
+  const [, setError] = useState(false);
 
   return (
     <Box display="flex" minHeight="60vh" width="100%" alignItems="center" justifyContent="center">
@@ -70,9 +69,13 @@ const LoginPage = () => {
                 },
               }}
               onSubmit={async ({ formData }) => {
-                const response = await loginMutation(formData);
-                lsReturn[1](response.data.userLogin.token);
-                navigate(`/user/${response.data.userLogin.user.id}`);
+                try {
+                  const response = await loginMutation(formData);
+                  localStorage.setItem('token', response.data.userLogin.token);
+                  navigate(`/user/${response.data.userLogin.user.id}`);
+                } catch (error) {
+                  setError(true);
+                }
               }}
             >
               <Box display="flex" alignItems="center" justifyContent="center" pt={1}>

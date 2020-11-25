@@ -49,8 +49,9 @@ const USER_PAGE_QUERY = `
 `;
 
 const UserPage = () => {
-  // const { user } = useAutheticated();
+  const { user } = useAutheticated();
   const { userId } = useParams();
+  const isActiveUser = user?.id === parseInt(userId, 10);
 
   const [{ data, fetching }] = useQuery({
     query: USER_PAGE_QUERY,
@@ -90,7 +91,7 @@ const UserPage = () => {
             />
           </Box>
           <TopRatingsList />
-          <List label="Tours" creatable={true}>
+          <List label="Tours" creatable={isActiveUser}>
             {userTours.map((tour) => {
               return (
                 <ListItem key={tour.id}>
